@@ -1,0 +1,20 @@
+[project]
+name = "pfncc"
+version = "0.1.0"
+description = "Reproducible PFNC clustering experiments"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+	"matplotlib>=3.8",
+	"numpy>=1.26",
+	"pandas>=2.2",
+	"scikit-learn>=1.4",
+	"scipy>=1.11",
+]
+
+[project.scripts]
+pfncc = "pfncc.cli:main"
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
