@@ -1,6 +1,29 @@
-PFNC Clustering Experiments
+## Paper
 
-What is implemented
+- **Title:** Proportional Fairness in Non-Centroid Clustering
+- **Authors:** Ioannis Caragiannis, Evi Micha, Nisarg Shah
+- **Venue:** NeurIPS 2024
+- **Link:** [Proportional Fairness in Non-Centroid Clustering](https://proceedings.neurips.cc/paper_files/paper/2024/file/220cbc7435d6a56205c87d73d15d9eda-Paper-Conference.pdf)
+
+## Setup
+
+**Prerequisites:** Python ≥ 3.11, [uv](https://docs.astral.sh/uv/) (package manager)
+
+If you don't have uv installed:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Then restart your terminal (or run `source ~/.bashrc` / `source ~/.zshrc`).
+
+**Verify setup:**
+
+```bash
+uv run pfncc --help
+```
+
+## What is implemented
 
 - Greedy Capture (`FGC`) baseline
 - `k-means++` baseline
@@ -10,13 +33,7 @@ What is implemented
 - CSV export compatible with the original format (`6 x 7` matrix per `k`)
 - Plot generation for all reported metrics
 
-Run setup
-
-From this folder:
-
-- `uv run pfncc --help`
-
-Run experiments
+## Run experiments
 
 - Iris (single run for Greedy Capture, repeated baselines):
 	- `uv run pfncc run --dataset iris --k-start 2 --k-end 10 --out-dir results/iris`
@@ -25,11 +42,11 @@ Run experiments
 - Adult (40 outer repeats with sample size 100):
 	- `uv run pfncc run --dataset adult --k-start 5 --k-end 25 --out-dir results/adult`
 
-Generate figures
+## Generate figures
 
 - `uv run pfncc plot --dataset adult --k-start 5 --k-end 25 --result-dir results/adult --out-dir figures/adult --repeats 40`
 
-Run all paper pipelines automatically
+## Run all paper pipelines automatically
 
 - Full run (all datasets + plots, saved under `artifacts/`):
 	- `./scripts/run_all_pipelines.sh`
@@ -40,7 +57,7 @@ Run all paper pipelines automatically
 - Custom output root:
 	- `./scripts/run_all_pipelines.sh --out-root /path/to/output`
 
-Notes
+## Notes
 
 - Dataset loading is portable:
 	- `iris` from scikit-learn
