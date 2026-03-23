@@ -74,14 +74,15 @@ def plot_metric_from_csvs(
     ci = 1.96 * kmed[:, 1] / np.sqrt(max(1, repeats))
     ax.fill_between(x, kmed[:, 0] - ci, kmed[:, 0] + ci, color="y", alpha=0.1)
 
-    ax.set_xlabel("k")
-    ax.set_ylabel(ylabel)
+    ax.set_xlabel("k", fontsize=14)
+    ax.set_ylabel(ylabel, fontsize=14)
+    ax.tick_params(axis="both", labelsize=18)
     ax.set_xlim(min(k_values) - 1, max(k_values) + 1)
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     if metric_key in {"cost", "kmeans", "kmedoids"}:
         ax.set_ylim(bottom=0)
 
-    ax.legend(loc=legend_loc)
+    ax.legend(loc=legend_loc, fontsize=12)
     fig.tight_layout()
 
     output_dir = Path(out_dir)

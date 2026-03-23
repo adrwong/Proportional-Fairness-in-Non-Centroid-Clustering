@@ -17,7 +17,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="command", required=True)
 
     run_p = sub.add_parser("run", help="Run experiments and save CSV files")
-    run_p.add_argument("--dataset", choices=["iris", "diabetes", "adult"], required=True)
+    run_p.add_argument("--dataset", choices=["iris", "diabetes", "adult", "wine", "student"], required=True)
     run_p.add_argument("--k-start", type=int, required=True)
     run_p.add_argument("--k-end", type=int, required=True)
     run_p.add_argument("--out-dir", default="results")
@@ -25,7 +25,7 @@ def build_parser() -> argparse.ArgumentParser:
     run_p.add_argument("--seed", type=int, default=0)
 
     plot_p = sub.add_parser("plot", help="Generate figures from CSV files")
-    plot_p.add_argument("--dataset", choices=["iris", "diabetes", "adult"], required=True)
+    plot_p.add_argument("--dataset", choices=["iris", "diabetes", "adult", "wine", "student"], required=True)
     plot_p.add_argument("--k-start", type=int, required=True)
     plot_p.add_argument("--k-end", type=int, required=True)
     plot_p.add_argument("--result-dir", default="results")

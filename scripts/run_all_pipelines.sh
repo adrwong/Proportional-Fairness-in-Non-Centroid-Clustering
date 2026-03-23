@@ -16,7 +16,7 @@ Usage:
 
 Options:
   --out-root <path>     Root output directory (default: ./artifacts)
-  --only <dataset>      Run only one dataset: iris | diabetes | adult
+  --only <dataset>      Run only one dataset: iris | diabetes | adult | wine | student
   --skip-run            Skip experiment CSV generation
   --skip-plot           Skip figure generation
   -h, --help            Show this help
@@ -109,6 +109,12 @@ if [[ -n "${ONLY_DATASET}" ]]; then
     adult)
       run_dataset adult 5 25 40
       ;;
+    wine)
+      run_dataset wine 2 15 1
+      ;;
+    student)
+      run_dataset student 2 15 1
+      ;;
     *)
       echo "Invalid --only value: ${ONLY_DATASET}"
       usage
@@ -119,6 +125,8 @@ else
   run_dataset iris 2 25 1
   run_dataset diabetes 5 25 40
   run_dataset adult 5 25 40
+  run_dataset wine 2 15 1
+  run_dataset student 2 15 1
 fi
 
 echo "Done. Outputs saved under: ${OUT_ROOT}"

@@ -85,7 +85,7 @@ def run_dataset_experiment(
     seed: int = 0,
 ) -> None:
     dataset_l = dataset.lower()
-    if dataset_l == "iris":
+    if dataset_l in {"iris", "wine", "student"}:
         sample_n = None
         outer_repeats = 1
         inner_repeats = 20

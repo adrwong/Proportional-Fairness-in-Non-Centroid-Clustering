@@ -203,3 +203,8 @@ __marimo__/
 .vscode/*
 
 temp/
+
+# Local / OS / caches
+.DS_Store
+**/.DS_Store
+.openml_cache/

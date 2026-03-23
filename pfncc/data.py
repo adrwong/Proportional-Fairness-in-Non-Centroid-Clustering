@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+import zipfile
 from dataclasses import dataclass
+from io import BytesIO
+from urllib.request import urlopen
 
 import numpy as np
 import pandas as pd
-from sklearn.datasets import fetch_openml, load_diabetes, load_iris
+from sklearn.datasets import fetch_openml, load_diabetes, load_iris, load_wine
 from sklearn.preprocessing import scale
 
 
@@ -54,6 +57,27 @@ def load_full_dataset(name: str) -> FullDataset:
             weights = np.ones(len(numeric), dtype=float)
 
         return FullDataset(data=numeric.to_numpy(dtype=float), weights=weights)
+
+    if dataset == "wine":
+        wine = load_wine()
+        return FullDataset(data=wine.data.astype(float), weights=None)
+
+    if dataset in {"student", "students"}:
+        # Load from UCI (OpenML student-mat no longer available)
+        url = "https://archive.ics.uci.edu/static/public/320/student+performance.zip"
+        with urlopen(url) as resp:
+            with zipfile.ZipFile(BytesIO(resp.read())) as outer:
+                with outer.open("student.zip") as f:
+                    with zipfile.ZipFile(BytesIO(f.read())) as inner:
+                        with inner.open("student-mat.csv") as csv_f:
+                            frame = pd.read_csv(csv_f, sep=";", encoding="utf-8")
+        numeric = frame.select_dtypes(include=[np.number])
+        if numeric.empty:
+            numeric = pd.DataFrame(
+                {col: pd.to_numeric(frame[col], errors="coerce") for col in frame.columns}
+            ).dropna(axis=1, how="all")
+        numeric = numeric.fillna(numeric.median())
+        return FullDataset(data=numeric.to_numpy(dtype=float), weights=None)
 
     raise ValueError(f"Unsupported dataset: {name}")
 

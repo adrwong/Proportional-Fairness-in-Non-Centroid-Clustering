@@ -1,7 +1,31 @@
-PFNC Clustering Experiments
+## Paper
 
-What is implemented
+- **Title:** Proportional Fairness in Non-Centroid Clustering
+- **Authors:** Ioannis Caragiannis, Evi Micha, Nisarg Shah
+- **Venue:** NeurIPS 2024
+- **Link:** [Proportional Fairness in Non-Centroid Clustering](https://proceedings.neurips.cc/paper_files/paper/2024/file/220cbc7435d6a56205c87d73d15d9eda-Paper-Conference.pdf)
 
+## Setup
+
+**Prerequisites:** Python ≥ 3.11, [uv](https://docs.astral.sh/uv/) (package manager)
+
+If you don't have uv installed:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Then restart your terminal (or run `source ~/.bashrc` / `source ~/.zshrc`).
+
+**Verify setup:**
+
+```bash
+uv run pfncc --help
+```
+
+## What is implemented
+
+```markdown
 - Greedy Capture (`FGC`) baseline
 - `k-means++` baseline
 - `k-medoids` baseline (PAM-style implementation)
@@ -10,20 +34,20 @@ What is implemented
 - CSV export compatible with the original format (`6 x 7` matrix per `k`)
 - Plot generation for all reported metrics
 
-Run setup
+```
 
-From this folder:
-
-- `uv run pfncc --help`
-
-Run experiments
+## Run experiments
 
 - Iris (single run for Greedy Capture, repeated baselines):
-	- `uv run pfncc run --dataset iris --k-start 2 --k-end 10 --out-dir results/iris`
+  - `uv run pfncc run --dataset iris --k-start 2 --k-end 10 --out-dir results/iris`
 - Diabetes (40 outer repeats with sample size 100):
-	- `uv run pfncc run --dataset diabetes --k-start 5 --k-end 15 --out-dir results/diabetes`
+  - `uv run pfncc run --dataset diabetes --k-start 5 --k-end 15 --out-dir results/diabetes`
 - Adult (40 outer repeats with sample size 100):
-	- `uv run pfncc run --dataset adult --k-start 5 --k-end 25 --out-dir results/adult`
+  - `uv run pfncc run --dataset adult --k-start 5 --k-end 25 --out-dir results/adult`
+- Wine (single run, full dataset):
+  - `uv run pfncc run --dataset wine --k-start 2 --k-end 15 --out-dir results/wine`
+- Student (single run, full dataset):
+  - `uv run pfncc run --dataset student --k-start 2 --k-end 15 --out-dir results/student`
 
 Generate figures
 
@@ -32,18 +56,23 @@ Generate figures
 Run all paper pipelines automatically
 
 - Full run (all datasets + plots, saved under `artifacts/`):
-	- `./scripts/run_all_pipelines.sh`
+  - `./scripts/run_all_pipelines.sh`
 - Single dataset examples:
-	- `./scripts/run_all_pipelines.sh --only iris`
-	- `./scripts/run_all_pipelines.sh --only diabetes`
-	- `./scripts/run_all_pipelines.sh --only adult`
+  - `./scripts/run_all_pipelines.sh --only iris`
+  - `./scripts/run_all_pipelines.sh --only diabetes`
+  - `./scripts/run_all_pipelines.sh --only adult`
+  - `./scripts/run_all_pipelines.sh --only wine`
+  - `./scripts/run_all_pipelines.sh --only student`
 - Custom output root:
-	- `./scripts/run_all_pipelines.sh --out-root /path/to/output`
+  - `./scripts/run_all_pipelines.sh --out-root /path/to/output`
 
 Notes
 
 - Dataset loading is portable:
-	- `iris` from scikit-learn
-	- `diabetes` from scikit-learn numeric diabetes dataset
-	- `adult` from OpenML (`adult`, v2)
+  - `iris` from scikit-learn
+  - `diabetes` from scikit-learn numeric diabetes dataset
+  - `adult` from OpenML (`adult`, v2)
+  - `wine` from scikit-learn
+	- `student` from UCI (student-mat), numeric columns only
 - The MILP checks for FJR/Core use SciPy HiGHS (`scipy.optimize.milp`) to avoid requiring Gurobi.
+
